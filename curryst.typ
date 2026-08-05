@@ -471,7 +471,7 @@
   }
 
 
-  layout(available => {
+  let content = layout(available => {
     let tree = layout-tree(
       rule,
       available.width,
@@ -491,6 +491,15 @@
       tree,
     )
   })
+
+  context {
+    // If compiling to HTML, output an embedded SVG.
+    if "html" in dictionary(std) and target() == "html" {
+      html.frame(content)
+    } else {
+      content
+    }
+  }
 }
 
 /// Very Simple function to typeset a set of rules.
